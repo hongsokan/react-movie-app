@@ -1,22 +1,10 @@
-const express = require('express')
-const app = express()
-const port = 3000
-
-const dotenv = require('dotenv');
-const path = require('path');
+const express = require('express');
+const app = express();
+const port = 3000;
 const bodyParser = require('body-parser');
-
 const config = require('./config/key');
 
 const { User } = require('./models/User');
-
-// 출처: https://devhyun.com/blog/post/23
-dotenv.config({
-  path: path.resolve(
-    process.cwd(),
-    process.env.NODE_ENV == "production" ? ".env" : ".env.dev"
-  )
-});
 
 const mongoose = require('mongoose')
 mongoose.connect(config.mongoURI, {

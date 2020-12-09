@@ -1,12 +1,13 @@
-// import dotenv from 'dotenv';
-// import path from 'path';
-const dotenv = require('dotenv');
-const path = require('path');
-
 const express = require('express')
 const app = express()
 const port = 3000
+
+const dotenv = require('dotenv');
+const path = require('path');
 const bodyParser = require('body-parser');
+
+const config = require('./config/key');
+
 const { User } = require('./models/User');
 
 // 출처: https://devhyun.com/blog/post/23
@@ -18,7 +19,7 @@ dotenv.config({
 });
 
 const mongoose = require('mongoose')
-mongoose.connect(`mongodb+srv://${process.env.id}:${process.env.password}@boiler-plate.e1sl9.mongodb.net/<dbname>?retryWrites=true&w=majority`, {
+mongoose.connect(config.mongoURI, {
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));

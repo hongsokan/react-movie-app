@@ -6,13 +6,6 @@ const config = require('./config/key');
 
 const { User } = require('./models/User');
 
-const mongoose = require('mongoose')
-mongoose.connect(config.mongoURI, {
-  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
-}).then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
-
-
 // body-parser (각자 아래와 같은 형식의 데이터를 가져올 수 있다)
 // application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,8 +13,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // application/json
 app.use(bodyParser.json());
 
+const mongoose = require('mongoose');
+
+mongoose.connect(config.mongoURI, {
+  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
+}).then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
+
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World!!')
 })
 
 

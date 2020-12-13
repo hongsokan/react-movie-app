@@ -42,23 +42,22 @@ userSchema.pre('save', function( next ) {
     // 이름이나 이메일 변경하는 경우는 해당되지 않음
     // 비밀번호를 바꾸는 경우에만 비밀번호 암호화 진행
     if (user.isModified('password')) {
-        print("password modified");
         bcrypt.genSalt(saltRounds, function (err, salt) {
             if (err) {
-                print("failed to generate salt");
-                return next(err); 
+                return next(err)
             }
 
             bcrypt.hash(user.password, salt, function (err, hash) {
                 // Store hash in your password DB.
                 if (err) {
-                    print("failed to hash password");
-                    return next(err);
+                    return next(err)
                 }
-                user.password = hash; // hash된 비밀번호로 바꿔준다
-                next();
-            });
-        });
+                user.password = hash // hash된 비밀번호로 바꿔준다
+                next()
+            })
+        })
+    } else {
+        next()
     }
 })
 

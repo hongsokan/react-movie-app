@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
 const userSchema = mongoose.Schema({
     name: {
@@ -14,7 +15,7 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        maxlength: 5
+        minlength: 5
     },
     lastname: {
         type: String,
@@ -60,6 +61,32 @@ userSchema.pre('save', function( next ) {
         next()
     }
 })
+
+// 클라이언트에서 요청한 비밀번호와 데이터베이스에 있는 비밀번호 및 암호화된 비밀번호 비교
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+    // test2
+    // plainPassword 1234
+    // 암호화된 비밀번호 $2b$10$pPB810c.bYci1BUA6ZyNvuOzdBwph3sslaW32ccJPvq4gPuX3wdqm
+    bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch); // true
+    })
+}
+
+// 토큰 생성 (jsonwebtoken)
+userSchema.methods.generateToken = function (cb) {
+    var user = this;
+
+    // jwt 이용해서 토큰 생성, 토큰 = user._id + secretToken
+    var token = jwt.sign(user._id.toHexString(), 'secretToken')
+
+    // user 정보가 login router에서 generateToken메서드로 전달됨
+    user.token = token
+    user.save(function (err, user) {
+        if (err) return cb(err)
+        cb(null, user)
+    })
+}
 
 
 const User = mongoose.model('User', userSchema);

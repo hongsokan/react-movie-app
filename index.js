@@ -4,7 +4,7 @@ const port = 3000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
-
+const { auth } = require('./middleware/auth');
 const { User } = require('./models/User');
 
 // body-parser (각자 아래와 같은 형식의 데이터를 가져올 수 있다)
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 
 // register router (postman으로 request 보내기)
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
 
   // 회원 가입할 때 필요한 정보들을 client에서 가져오면
   // 그것들을 데이터 베이스에 넣어준다.
@@ -44,7 +44,7 @@ app.post('/register', (req, res) => {
 })
 
 // login router
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
 
   // 요청된 이메일이 데이터베이스에 있는지 확인
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -71,6 +71,38 @@ app.post('/login', (req, res) => {
       })
     })
   })
+})
+
+
+// auth router, auth 미들웨어
+app.get('/api/users/auth', auth, (req, res) => {
+
+  // 여기까지 미들웨어를 통과해 오면 Auth가 true
+  // role 1 어드민, role 2 특정 부서 어드민
+  // role 0 -> 일반유저, role 0이 아니면 관리자
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image
+  })
+})
+
+
+app.get('/api/users/logout', auth, (req, res) => {
+  // console.log('req.user', req.user)
+  User.findOneAndUpdate({ _id: req.user._id },
+    { token: "" }
+    , (err, user) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).send({
+        success: true
+      })
+    })
 })
 
 

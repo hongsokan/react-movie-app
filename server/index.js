@@ -26,6 +26,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!!')
 })
 
+app.get('/api/hello', (req, res) => {
+  res.send("안녕하세요 ~ (LandingPage 테스트)");
+})
 
 // register router (postman으로 request 보내기)
 app.post('/api/users/register', (req, res) => {

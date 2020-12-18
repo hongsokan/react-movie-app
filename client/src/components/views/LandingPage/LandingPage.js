@@ -10,7 +10,7 @@ function LandingPage(props) {
             .then(response => { console.log(response) })
     }, [])
 
-    /*
+    
     // 로그아웃 이벤트
     const onClickHandler = () => {
         axios.get(`/api/users/logout`)
@@ -21,7 +21,7 @@ function LandingPage(props) {
                     alert('로그아웃 하는데 실패 했습니다.')
                 }
             })
-    }   */
+    }
 
     return (
         <div style={{
@@ -30,7 +30,7 @@ function LandingPage(props) {
         }}>
             <h2>시작 페이지</h2>
 
-            <button // onClick={onClickHandler}
+            <button onClick={onClickHandler}
             >
                 로그아웃
             </button>

@@ -7,6 +7,9 @@ const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 const { User } = require('./models/User');
 
+const path = require("path");
+const cors = require('cors');
+
 // body-parser (각자 아래와 같은 형식의 데이터를 가져올 수 있다)
 // application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,12 +18,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.use(cors())
+
+app.use('/api/users', require('./routes/users'));
+app.use('/api/favorite', require('./routes/favorite'));
+app.use('/api/comment', require('./routes/comment'));
+app.use('/api/like', require('./routes/like'));
+
 const mongoose = require('mongoose');
 
 mongoose.connect(config.mongoURI, {
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
+
+
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!!')

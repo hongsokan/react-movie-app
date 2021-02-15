@@ -21,6 +21,9 @@
     "mongoose": "^5.11.5"
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.5.0",
+    "antd": "^4.12.3",
+    "cors": "^2.8.5",
     "nodemon": "^2.0.6"
   }
 }

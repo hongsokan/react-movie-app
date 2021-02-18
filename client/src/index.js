@@ -13,7 +13,7 @@ import Reducer from './_reducers';
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore)
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider
     // 크롬 익스텐션 Redux DevTools 연결
       store={createStoreWithMiddleware(Reducer,
@@ -23,7 +23,8 @@ ReactDOM.render(
     >
       <App />
     </Provider>
-  </React.StrictMode>,
+//  </React.StrictMode>
+,
   document.getElementById('root')
 );
 

@@ -9,6 +9,7 @@ import GridCards from '../commons/GridCards';
 import MainImage from '../../views/LandingPage/Sections/MainImage';
 import MovieInfo from './Sections/MovieInfo';
 import Favorite from './Sections/Favorite';
+
 function MovieDetailPage(props) {
 
     const movieId = props.match.params.movieId
@@ -73,6 +74,7 @@ function MovieDetailPage(props) {
 
     return (
         <div>
+            
             {/* Header */}
             {!LoadingForMovie ?
                 <MainImage

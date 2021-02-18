@@ -5,6 +5,8 @@ import { API_URL, API_KEY, IMAGE_BASE_URL } from '../../../Config';
 import MainImage from './Sections/MainImage';
 import GridCards from '../commons/GridCards';
 import { Row } from 'antd';
+import NavBar from '../NavBar/NavBar';
+import Footer from '../Footer/Footer';
 
 function LandingPage(props) {
 
@@ -47,6 +49,10 @@ function LandingPage(props) {
 
     return (
         <div style={{ width: '100%', margin: '0' }}>
+            
+            <div style= {{ width: '100%' }}>
+                <NavBar />
+            </div>
 
             {/* Main Image */}
             {MainMovieImage &&
@@ -75,7 +81,7 @@ function LandingPage(props) {
                             />
                         </React.Fragment>
                     ))}
-                </Row> 
+                </Row>
 
             </div>
 
@@ -84,6 +90,9 @@ function LandingPage(props) {
                 <button onClick={loadMoreItems}> Load More</button>
             </div>
 
+            <div style= {{ width: '100%' }}>
+                <Footer />
+            </div>
         </div>
     )
 }
